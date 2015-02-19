@@ -145,7 +145,7 @@ body
 {
 	float: left;
 	vertical-align: top;
-	width: 95px;
+	width: 115px;
 	margin: 0;
 	text-align: center;
 	
@@ -155,7 +155,7 @@ body
 {
 	vertical-align: top;
     display: inline-block;
-	margin-left: 30px;
+	width: 90px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	color: rgb(51,181,229);
