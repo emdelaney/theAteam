@@ -1,0 +1,163 @@
+body 
+{
+	background: #eeeeee;
+}
+
+#banner 
+{
+	background-color: #222222;
+	padding: 5px;
+	text-align: center;
+	color: rgb(51, 181, 229);
+	font-family: Serif, Georgia;
+}
+
+#title
+{
+	font-family: Arial, Serif, Georgia;
+	font-style: italic;
+	font-size: 36px;
+}
+
+#sub_title 
+{
+	font-family: Arial, Serif, Georgia;
+	font-size: 18px;
+}
+
+#sub_banner 
+{
+
+}
+
+#content 
+{
+	overflow: hidden;
+	height: 100%;
+	vertical-align: middle;
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+#top_content 
+{
+	overflow: hidden;
+	height: 100%;
+	border: 1px solid orange;
+}
+
+#dataset 
+{
+	border: 3px solid black;
+	display: inline-block;
+	margin-right: 100px;
+	margin-left: 20px;
+}
+
+#play 
+{
+	border: 3px solid red;
+	display: inline-block;
+	margin-right: 100px;
+}
+
+#year 
+{
+	border: 3px solid green;
+	width: 150px;
+	margin: 20px;
+	display: inline-block;
+}
+
+#bottom_content 
+{
+	overflow: hidden;
+	height: 100%;
+	border: 1px solid black;
+}
+
+#filter 
+{
+	border: 3px solid blue;
+	margin: 20px;
+	display: inline-block;
+	vertical-align: top
+}
+
+#graph 
+{
+	overflow: hidden;
+	height: 100%;
+	background: #eeeeee;
+	width: 620px;
+	display: inline-block;
+}
+
+#graph_canvas 
+{
+	border: 1px solid rgb(51, 181, 229);
+	background: rgb(60,60,61);
+}
+
+#top_graph 
+{
+	vertical-align: top;
+	display: inline-block;
+	overflow: hidden;
+	height: 355px;
+}
+
+#y_label 
+{
+	display: inline-block;
+	*display: inline;
+	margin-top: 25%;
+	margin-right: -55px;
+	margin-left: -39px;
+	vertical-align: top;
+	-ms-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	font-family: Arial, Serif, Georgia;
+	color: rgb(51,181,229);
+}
+
+#actual_graph 
+{
+	display: inline-block;
+	*display: inline;
+	vertical-align: top;
+}
+
+#bottom_graph 
+{
+	vertical-align: bottom;
+	overflow: hidden;
+	height: 100%;
+	width: 500px;
+	text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+	font-family: Arial, Serif, Georgia;
+}
+
+.filler 
+{
+	float: left;
+	vertical-align: top;
+	width: 95px;
+	margin: 0;
+	text-align: center;
+	
+}
+
+.x_label 
+{
+	vertical-align: top;
+    display: inline-block;
+	margin-left: 30px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: rgb(51,181,229);
+    zoom: 1
+}
