@@ -48,7 +48,6 @@ body
 
 #dataset 
 {
-	border: 3px solid black;
 	display: inline-block;
 	margin-right: 100px;
 	margin-left: 20px;
@@ -61,10 +60,14 @@ body
 	margin-right: 100px;
 }
 
+select 
+{
+	font-family: Arial, Serif, Georgia;
+	font-size: 18px;
+}
+
 #year 
 {
-	border: 3px solid green;
-	width: 150px;
 	margin: 20px;
 	display: inline-block;
 }
