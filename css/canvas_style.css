@@ -35,15 +35,14 @@ body
 	overflow: hidden;
 	height: 100%;
 	vertical-align: middle;
-	margin-left: 20%;
-	margin-right: 20%;
+	margin-left: 10%;
+	margin-right: 10%;
 }
 
 #top_content 
 {
 	overflow: hidden;
 	height: 100%;
-	border: 1px solid orange;
 }
 
 #dataset 
@@ -51,6 +50,7 @@ body
 	display: inline-block;
 	margin-right: 100px;
 	margin-left: 20px;
+	font-family: Arial, Serif, Georgia;
 }
 
 #play 
@@ -70,13 +70,13 @@ select
 {
 	margin: 20px;
 	display: inline-block;
+	font-family: Arial, Serif, Georgia;
 }
 
 #bottom_content 
 {
 	overflow: hidden;
 	height: 100%;
-	border: 1px solid black;
 }
 
 #filter 
@@ -98,8 +98,8 @@ select
 
 #graph_canvas 
 {
-	border: 1px solid rgb(51, 181, 229);
-	background: rgb(60,60,61);
+	/*border: 1px solid rgb(51, 181, 229);*/
+	background: white;
 }
 
 #top_graph 
@@ -154,11 +154,16 @@ select
 	
 }
 
-.x_label 
+.first_label
+{
+	margin-left: 50px;
+}
+
+.x_label, .first_label
 {
 	vertical-align: top;
     display: inline-block;
-	width: 90px;
+	width: 85px;
 	margin-top: 5px;
 	margin-bottom: 5px;
 	color: rgb(51,181,229);
