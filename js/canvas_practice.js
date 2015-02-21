@@ -10,11 +10,22 @@ maverick.init = {};
 // Implement this module for the maverick namespace
 maverick.init = function() {
 	
+	var test_data = [6.7, 36.3, 0.0, 43.2, 13.8];
+	var canvas;
+	var context;
+	var highest;
+	
 	function draw() {
 		// Getting the context for the Canvas on the screen
-		var canvas = document.getElementById("graph_canvas");
-		var context = canvas.getContext("2d");
+		canvas = document.getElementById("graph_canvas");
+		context = canvas.getContext("2d");
 		
+		draw_axes();
+		draw_scales();
+		draw_bars();
+	}
+	
+	function draw_axes() {
 		// Open a new path
 		context.beginPath();
 		
@@ -34,6 +45,40 @@ maverick.init = function() {
 		// Draw the y-axis
 		context.stroke();
 		
+		if(Math.max.apply(null, test_data) > 50.0) {
+			highest = 100.0;
+		}
+		else {
+			highest = 50.0;
+		}
+		
+		// Make this less "hardcoded"
+		for(var i = 4; i >= 0; i--) {
+			context.beginPath();
+			context.moveTo(40, (i * 65) + 20);
+			context.lineTo(50, (i * 65) + 20);
+			context.fillStyle = "rgb(0,0,0)";
+			context.stroke();
+		}
+	}
+	
+	function draw_scales() {
+		var scale = ~~highest;
+		var temp = scale;
+		var scales = [];
+		while(temp >= 0) {
+			scales.push(temp);
+			temp = temp - (scale/5);
+		}
+		
+		context.font = "14px Arial";
+		scales.forEach(function(el, index) {
+			context.fillText("" + el, 10, (index * 65) + 20);
+		});
+	}
+	
+	function draw_bars() {
+	
 	}
 	
 	window.onload = draw;
