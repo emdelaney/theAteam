@@ -48,16 +48,21 @@ body
 #dataset 
 {
 	display: inline-block;
-	margin-right: 100px;
+	margin-right: 120px;
 	margin-left: 20px;
 	font-family: Arial, Serif, Georgia;
 }
 
 #play 
 {
-	border: 3px solid red;
 	display: inline-block;
 	margin-right: 100px;
+	margin-top: 10px;
+}
+
+#play:hover
+{
+	border: 1px solid rgba(51,181,229,0.5);
 }
 
 select 
@@ -99,7 +104,7 @@ select
 #graph_canvas 
 {
 	/*border: 1px solid rgb(51, 181, 229);*/
-	background: white;
+	background: #777777;
 }
 
 #top_graph 

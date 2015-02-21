@@ -11,6 +11,8 @@ maverick.init = {};
 maverick.init = function() {
 	
 	var test_data = [6.7, 36.3, 0.0, 43.2, 13.8];
+	var colors = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
+					  "rgba(255,255,0,0.5)", "rgba(255,0,255,0.5)"];
 	var canvas;
 	var context;
 	var highest;
@@ -78,7 +80,15 @@ maverick.init = function() {
 	}
 	
 	function draw_bars() {
-	
+		
+		test_data.forEach(function(el, index) {
+			var top = 20 + ((highest - el) * 325/highest);
+			var height = 343 - top;
+			var left = 55 + (index * 85);
+			
+			context.fillStyle = colors[index];
+			context.fillRect(left, top, 85, height);
+		});
 	}
 	
 	window.onload = draw;
