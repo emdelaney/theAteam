@@ -43,13 +43,14 @@ body
 {
 	overflow: hidden;
 	height: 100%;
+	margin: 20px;
+	
 }
 
 #dataset 
 {
 	display: inline-block;
 	margin-right: 120px;
-	margin-left: 20px;
 	font-family: Arial, Serif, Georgia;
 }
 
@@ -62,7 +63,8 @@ body
 
 #play:hover
 {
-	border: 1px solid rgba(51,181,229,0.5);
+	background: rgba(51,181,229,0.5);
+	/*background-image: url('img/play_highlighted.png');*/
 }
 
 select 
@@ -73,7 +75,6 @@ select
 
 #year 
 {
-	margin: 20px;
 	display: inline-block;
 	font-family: Arial, Serif, Georgia;
 }
@@ -84,10 +85,20 @@ select
 	height: 100%;
 }
 
+.fil_but
+{
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+	margin: 5px;
+}
+
 #filter 
 {
-	border: 3px solid blue;
-	margin: 20px;
+	overflow: hidden;
+	height: 100%;
+	border: 3px solid rgba(200, 200, 200, 0.5);
+	margin: 10px;
 	display: inline-block;
 	vertical-align: top
 }
