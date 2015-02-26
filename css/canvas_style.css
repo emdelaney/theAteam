@@ -7,9 +7,19 @@ body
 {
 	background-color: #222222;
 	padding: 5px;
-	text-align: center;
 	color: rgb(51, 181, 229);
 	font-family: Serif, Georgia;
+}
+
+#subban1
+{
+	margin-right: 50px;
+}
+
+#subban1, #subban2
+{
+	display: inline-block;
+	text-align: center;
 }
 
 #title
@@ -43,8 +53,9 @@ body
 {
 	overflow: hidden;
 	height: 100%;
-	margin: 20px;
-	
+	margin-top: 20px;
+	margin-bottom: 20px;
+	/*border: 2px solid red;*/
 }
 
 #dataset 
@@ -52,13 +63,13 @@ body
 	display: inline-block;
 	margin-right: 120px;
 	font-family: Arial, Serif, Georgia;
+	/*border: 2px solid green;*/
 }
 
 #play 
 {
 	display: inline-block;
 	margin-right: 100px;
-	margin-top: 10px;
 }
 
 #play:hover
@@ -83,6 +94,8 @@ select
 {
 	overflow: hidden;
 	height: 100%;
+	display: inline-block;
+	/*border: 2px solid blue;*/
 }
 
 .fil_but
@@ -91,16 +104,36 @@ select
 	text-align: center;
 	padding: 5px;
 	margin: 5px;
+	color: rgb(60, 60, 61);
+	border: 1px solid rgba(51, 181, 229, 0.5);
 }
 
-#filter 
+.fil_but:hover
+{
+	background: rgba(51, 181, 229, 0.5);
+}
+
+#filter
+{
+	display: inline-block;
+	overflow: hidden;
+	height: 100%;
+	font-family: Arial, Serif, Georgia;
+	/*border: 2px solid black;*/
+}
+
+#gender_filter, #pol_filter
 {
 	overflow: hidden;
 	height: 100%;
-	border: 3px solid rgba(200, 200, 200, 0.5);
-	margin: 10px;
-	display: inline-block;
-	vertical-align: top
+	border: 3px solid rgba(180, 180, 180, 0.5);
+	vertical-align: top;
+	padding-right: 10px;
+}
+
+#gender_filter
+{
+	margin-bottom: 20px;
 }
 
 #graph 
@@ -110,12 +143,13 @@ select
 	background: #eeeeee;
 	width: 620px;
 	display: inline-block;
+	/*border: 1px solid red;*/
 }
 
 #graph_canvas 
 {
 	/*border: 1px solid rgb(51, 181, 229);*/
-	background: #777777;
+	background: #888888;
 }
 
 #top_graph 
@@ -138,7 +172,7 @@ select
 	-webkit-transform: rotate(-90deg);
 	transform: rotate(-90deg);
 	font-family: Arial, Serif, Georgia;
-	color: rgb(51,181,229);
+	color: rgb(80, 80, 80);
 }
 
 #actual_graph 
@@ -172,16 +206,16 @@ select
 
 .first_label
 {
-	margin-left: 50px;
+	margin-left: 60px;
 }
 
 .x_label, .first_label
 {
 	vertical-align: top;
     display: inline-block;
-	width: 85px;
+	width: 106px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-	color: rgb(51,181,229);
+	color: rgb(80, 80, 80);
     zoom: 1
 }

@@ -10,7 +10,7 @@ maverick.init = {};
 // Implement this module for the maverick namespace
 maverick.init = function() {
 	
-	var test_data = [6.7, 36.3, 0.0, 43.2, 13.8];
+	var test_data = [6.7, 36.3, 43.2, 13.8];
 	var colors = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
 					  "rgba(255,255,0,0.5)", "rgba(255,0,255,0.5)"];
 	var canvas;
@@ -64,6 +64,10 @@ maverick.init = function() {
 		}
 	}
 	
+	// Draw the numbers that label the y-axis;
+	// the highest number will differ based on
+	// the maximum value being visualized (currently
+	// only changes between 50 and 100 for the maximum)
 	function draw_scales() {
 		var scale = ~~highest;
 		var temp = scale;
@@ -79,15 +83,16 @@ maverick.init = function() {
 		});
 	}
 	
+	// Draw the bars that visualize the data onto the canvas element
 	function draw_bars() {
 		
 		test_data.forEach(function(el, index) {
 			var top = 20 + ((highest - el) * 325/highest);
 			var height = 343 - top;
-			var left = 55 + (index * 85);
+			var left = 55 + (index * 106);
 			
 			context.fillStyle = colors[index];
-			context.fillRect(left, top, 85, height);
+			context.fillRect(left, top, 106, height);
 		});
 	}
 	
