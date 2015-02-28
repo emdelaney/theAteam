@@ -105,7 +105,7 @@ select
 	margin: 5px;
 	color: rgb(60, 60, 61);
 	border: 1px solid rgba(51, 181, 229, 0.5);
-	border-radius: 7px;
+	/*border-radius: 7px;*/
 }
 
 .fil_but:hover
