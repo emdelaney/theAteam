@@ -75,7 +75,6 @@ body
 #play:hover
 {
 	background: rgba(51,181,229,0.5);
-	/*background-image: url('img/play_highlighted.png');*/
 }
 
 select 
@@ -106,6 +105,7 @@ select
 	margin: 5px;
 	color: rgb(60, 60, 61);
 	border: 1px solid rgba(51, 181, 229, 0.5);
+	border-radius: 7px;
 }
 
 .fil_but:hover
@@ -126,7 +126,8 @@ select
 {
 	overflow: hidden;
 	height: 100%;
-	border: 3px solid rgba(180, 180, 180, 0.5);
+	/*border: 3px solid rgba(180, 180, 180, 0.8);
+	border-radius: 7px;*/
 	vertical-align: top;
 	padding-right: 10px;
 }
@@ -149,7 +150,8 @@ select
 #graph_canvas 
 {
 	/*border: 1px solid rgb(51, 181, 229);*/
-	background: #888888;
+	/*background: #556270;*/
+	background: rgba(52,56,56,1.0);
 }
 
 #top_graph 

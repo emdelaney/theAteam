@@ -11,11 +11,22 @@ maverick.init = {};
 maverick.init = function() {
 	
 	var test_data = [6.7, 36.3, 43.2, 13.8];
-	var colors = ["rgba(255,0,0,0.5)", "rgba(0,255,0,0.5)", "rgba(0,0,255,0.5)",
-					  "rgba(255,255,0,0.5)", "rgba(255,0,255,0.5)"];
+	var colors = ["rgba(0,95,107,1.0)", "rgba(0,140,158,1.0)", "rgba(0,180,204,1.0)",
+					  "rgba(0,223,252,1.0)"];
+	var axes_color = "rgb(150,150,150)";
 	var canvas;
 	var context;
 	var highest;
+	
+	var pause_url = "img/pause.png";
+	var play_url = "img/play.png";
+	var button_url = "img/pause.png";
+	var play_displayed = true;
+	
+	function init_gui() {
+		draw();
+		handler_setup();
+	}
 	
 	function draw() {
 		// Getting the context for the Canvas on the screen
@@ -42,7 +53,7 @@ maverick.init = function() {
 		context.lineTo(490, 339);
 		
 		// Set the fill color to black
-		context.fillStyle = "rgb(0,0,0)";
+		context.strokeStyle = axes_color;
 		
 		// Draw the y-axis
 		context.stroke();
@@ -59,7 +70,7 @@ maverick.init = function() {
 			context.beginPath();
 			context.moveTo(40, (i * 65) + 20);
 			context.lineTo(50, (i * 65) + 20);
-			context.fillStyle = "rgb(0,0,0)";
+			context.strokeStyle = axes_color;
 			context.stroke();
 		}
 	}
@@ -78,6 +89,7 @@ maverick.init = function() {
 		}
 		
 		context.font = "14px Arial";
+		context.fillStyle = axes_color;
 		scales.forEach(function(el, index) {
 			context.fillText("" + el, 10, (index * 65) + 20);
 		});
@@ -96,9 +108,25 @@ maverick.init = function() {
 		});
 	}
 	
-	window.onload = draw;
+	function handler_setup() {
+		var button = document.getElementById("play_button");
+	
+		button.onclick = function() {
+			button.setAttribute("src", button_url);
+			if(play_displayed) {
+				button_url = play_url;
+				play_displayed = false;
+			}
+			else {
+				button_url = pause_url;
+				play_displayed = true;
+			}
+		};
+	}
+	
+	window.onload = init_gui;
 	
 };
-
+	
 // Invoke the module
 maverick.init();
