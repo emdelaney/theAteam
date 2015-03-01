@@ -26,6 +26,9 @@ maverick.init = function() {
 	function init_gui() {
 		draw();
 		handler_setup();
+		
+		console.log(document.getElementById("content").offsetWidth);
+		console.log(document.getElementById("subban1").offsetHeight);
 	}
 	
 	function draw() {
