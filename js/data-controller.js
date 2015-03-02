@@ -163,13 +163,13 @@ maverick.data = function() {
 						}
 						
 						var percentages = [];
+						
 						for (var t of totals.keys()){ // This for-each loop will only work on Chrome 38 or newer!!!
 							percentages[t] = totals[t] / numResponses;
 						}												
 						
 						// Relate the percentages to their names. For now this is hard-coded, and this is fine for 2 data sets.
-						// If we expand to more later we can automate this process based on conversion tables.
-						
+						// If we expand to more later we can automate this process based on conversion tables.						
 						if ("fehelp" == varName){
 							var feReturn = [];
 							feReturn["Strongly Agree"]    = percentages[1];
@@ -180,11 +180,11 @@ maverick.data = function() {
 						}
 						else if ("homosex" == varName){
 							var hoReturn = [];
-							feReturn["Always Wrong"]        = percentages[1];
-							feReturn["Almost Always Wrong"] = percentages[2];
-							feReturn["Sometimes Wrong"]     = percentages[3];
-							feReturn["Not Wrong at All"]    = percentages[4];
-							callback(feReturn);
+							hoReturn["Always Wrong"]        = percentages[1];
+							hoReturn["Almost Always Wrong"] = percentages[2];
+							hoReturn["Sometimes Wrong"]     = percentages[3];
+							hoReturn["Not Wrong at All"]    = percentages[4];
+							callback(hoReturn);
 						}
 						else{
 							alert("Unsupported variable name " + varName + " used. Returning raw numeric names.");
