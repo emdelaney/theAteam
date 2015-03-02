@@ -4,6 +4,8 @@
  * Defines the applications functionality for fetching and transforming
  * data from the Google Fusion Table containing the GSS data
  *
+ * File based on Dr. Crenshaw's NYT data controller
+ *
  * @author Matthew Young
  * @date 1 March 2015
  *
@@ -80,14 +82,14 @@ maverick.data = function() {
             var genderQuery = "sex IN (1, 2)";
         }
 		else if (male){
-			var genderQuery = "(sex = 1)";
+			var genderQuery = "sex = 1";
 		}
 		else{ // female
-			var genderQuery = "(sex = 2)";
+			var genderQuery = "sex = 2";
 		}
 
 		
-        // Because political association has more options, we need to do something fancier to maintain sanity here
+        // Because political association has more options, we need to do something fancier to maintain sanity
         if (!(stRep || nStRep || ind || nStDem || stDem || other || decAns)) {
             stRep = nStRep = ind = nStDem = stDem = other = decAns = true;
         }
@@ -159,18 +161,35 @@ maverick.data = function() {
 								++totals[flatResponses[i]];
 							}
 						}
-						console.log(totals);
 						
 						var percentages = [];
 						for (var t of totals.keys()){ // This for-each loop will only work on Chrome 38 or newer!!!
 							percentages[t] = totals[t] / numResponses;
+						}												
+						
+						// Relate the percentages to their names. For now this is hard-coded, and this is fine for 2 data sets.
+						// If we expand to more later we can automate this process based on conversion tables.
+						
+						if ("fehelp" == varName){
+							var feReturn = [];
+							feReturn["Strongly Agree"]    = percentages[1];
+							feReturn["Agree"]             = percentages[2];
+							feReturn["Disagree"]          = percentages[3];
+							feReturn["Strongly Disagree"] = percentages[4];
+							callback(feReturn);
 						}
-						percentages.shift(); // Shift of terrifying NaN that occurs
-						
-						console.log(percentages);
-						
-
-						
+						else if ("homosex" == varName){
+							var hoReturn = [];
+							feReturn["Always Wrong"]        = percentages[1];
+							feReturn["Almost Always Wrong"] = percentages[2];
+							feReturn["Sometimes Wrong"]     = percentages[3];
+							feReturn["Not Wrong at All"]    = percentages[4];
+							callback(feReturn);
+						}
+						else{
+							alert("Unsupported variable name " + varName + " used. Returning raw numeric names.");
+							callback(percentages);
+						}
 						
                     }
                 }
