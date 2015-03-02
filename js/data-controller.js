@@ -9,7 +9,6 @@
  *
  *
  */
-
 // Extend the namespace
 var maverick = maverick || {};
 maverick.data = {};
@@ -20,9 +19,11 @@ maverick.data = {};
 maverick.data = function() {
 
     var apikey = "AIzaSyD2-nGM_SdBXqPVzFhkh_h1eFmWLpu39CM";
-     var keyParam = "&key=" + apikey;
-     var gssTableID = "14d34mgfXGR9tJWvqJu2v4C91RdZaxNpjdk4yw2iB";
-     var queryURL = "https://www.googleapis.com/fusiontables/v1/query?sql=";
+    var keyParam = "&key=" + apikey;
+    var gssTableID = "14d34mgfXGR9tJWvqJu2v4C91RdZaxNpjdk4yw2iB";
+    var queryURL = "https://www.googleapis.com/fusiontables/v1/query?sql=";
+
+
 
     // ************************************************************************
     // Methods local to this module.
@@ -38,14 +39,17 @@ maverick.data = function() {
      *
      */
     var makeHttpObject = function() {
-     try {return new XMLHttpRequest();}
-     catch (error) {}
-     try {return new ActiveXObject("Msxml2.XMLHTTP");}
-     catch (error) {}
-     try {return new ActiveXObject("Microsoft.XMLHTTP");}
-     catch (error) {}
-     
-     throw new Error("Could not create HTTP request object.");
+        try {
+            return new XMLHttpRequest();
+        } catch (error) {}
+        try {
+            return new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (error) {}
+        try {
+            return new ActiveXObject("Microsoft.XMLHTTP");
+        } catch (error) {}
+
+        throw new Error("Could not create HTTP request object.");
     };
 
     // ************************************************************************
@@ -59,63 +63,114 @@ maverick.data = function() {
      * Marjin Haverbeke, this function leverages the makeHttpObject call
      * to make an http request.
      *
+     * The year parameter corresponds to the year you want data for. The other parameters should be booleans
+     * indicating whether or not to include those results in the returned value (true = include). If an entire category
+     * is set to false it will be set to true.
+     *
      */
-    maverick.data.request = function() {
+    maverick.data.request = function(year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other, decAns) {
 
-     // Make a new request.
+	
+        // If no gender is selected or all genders are selected
+        if (!(male || female) || (male && female)) {
+            var genderQuery = "sex IN (1, 2)";
+        }
+		else if (male){
+			var genderQuery = "(sex = 1)";
+		}
+		else{ // female
+			var genderQuery = "(sex = 2)";
+		}
+
+		
+        // Because political association has more options, we need to do something fancier to maintain sanity here
+        if (!(stRep || nStRep || ind || nStDem || stDem || other || decAns)) {
+            stRep = nStRep = ind = nStDem = stDem = other = decAns = true;
+        }
+
+		var allowedParties = [];
+		
+		if (stDem){
+			allowedParties.push(0);
+		}
+		if (nStDem){
+			allowedParties.push(1);
+		}
+		if(ind){
+			allowedParties.push(2, 3, 4); // Lumping all independents regardless of leaning into one category
+		}
+		if (nStRep){
+			allowedParties.push(5);
+		}
+		if(stRep){
+			allowedParties.push(6);
+		}
+		if(other){
+			allowedParties.push(7);
+		}
+		if(decAns){
+			allowedParties.push(8);
+		}
+		
+		var politicalQuery = "partyid IN (" + allowedParties.join() + ")";
+		
+
+
+
+        // Make a new request.
         var r = makeHttpObject();
-     if (r) {
+        if (r) {
 
-         var url = queryURL + "SELECT * FROM " + gssTableID +  " WHERE year='1972'" + keyParam;
-         // Construct the details of the credentialed request and send it.
-         r.open("GET", url, true);
+            var url = queryURL + "SELECT " + varName + " FROM " + gssTableID + " WHERE year=" + "'" + year + "' AND " + genderQuery + " AND " + politicalQuery + keyParam;
+            // Construct the details of the credentialed request and send it.
+            r.open("GET", url, true);
 
-         // Alter the onreadystatchange property of the object to a
-         // function that will be called every time the state changes.
-         // If the state is '4' -- the document has been fully loaded.
-         r.onreadystatechange = function(evtXHR) {
-          if (r.readyState == 4){
-              if (r.status == 200) {
-               
-               // Convert the string response into JSON
-               // format.
-               var j = JSON.parse(r.responseText);
-               
-               console.log(j);
-/*
-               list = {};
-               
-               // Create a list of events and names.
-               for(var i = 0; i < j["num_results"]; i++) {
-                   
-                   list[i] = {};
+            // Alter the onreadystatchange property of the object to a
+            // function that will be called every time the state changes.
+            // If the state is '4' -- the document has been fully loaded.
+            r.onreadystatechange = function(evtXHR) {
+                if (r.readyState == 4) {
+                    if (r.status == 200) {
 
-                   // Extract the event name and url from the
-                   // JSON object received from the server.
-                   list[i].name = j.results[i]["event_name"];
-                   list[i].url = j.results[i]["event_detail_url"];
-               }
+                        // Convert the string response into JSON
+                        // format.
+                        var j = JSON.parse(r.responseText);
 
-               // List the events on the UI.
-               maverick.ui.listEvents(list, j["num_results"]);
+                        console.log(j);
+                        /*
+                                       list = {};
+                                       
+                                       // Create a list of events and names.
+                                       for(var i = 0; i < j["num_results"]; i++) {
+                                           
+                                           list[i] = {};
 
-               // Send a message to the map.
-               var message = {
-                   command: 'render'
-               }
-               
-               document.getElementById('map').contentWindow.postMessage(message, '*');
-*/
+                                           // Extract the event name and url from the
+                                           // JSON object received from the server.
+                                           list[i].name = j.results[i]["event_name"];
+                                           list[i].url = j.results[i]["event_detail_url"];
+                                       }
 
-              }
-          }
-         }
-         r.send();
-     }
+                                       // List the events on the UI.
+                                       maverick.ui.listEvents(list, j["num_results"]);
+
+                                       // Send a message to the map.
+                                       var message = {
+                                           command: 'render'
+                                       }
+                                       
+                                       document.getElementById('map').contentWindow.postMessage(message, '*');
+                        */
+
+                    }
+                }
+            }
+            r.send();
+        }
     };
 
-    
-}; // end lbrs.data-ctrl module
+
+}; // end maverick.data-ctrl module
 
 // Invoke module.
 maverick.data();
