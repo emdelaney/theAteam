@@ -63,12 +63,16 @@ maverick.data = function() {
      * Marjin Haverbeke, this function leverages the makeHttpObject call
      * to make an http request.
      *
+	 * callback is the function to be called once the request is complete. It should take an object as a parameter,
+	 * which will be a hashtable linking categories to percentages
+	 * 
+	 *
      * The year parameter corresponds to the year you want data for. The other parameters should be booleans
      * indicating whether or not to include those results in the returned value (true = include). If an entire category
      * is set to false it will be set to true.
      *
      */
-    maverick.data.request = function(year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other, decAns) {
+    maverick.data.request = function(callback, year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other, decAns) {
 
 	
         // If no gender is selected or all genders are selected
@@ -135,40 +139,39 @@ maverick.data = function() {
                 if (r.readyState == 4) {
                     if (r.status == 200) {
 
-                        // Convert the string response into JSON format.
+                        // Convert the string response into JSON format. Extract rows.
                         var responses = JSON.parse(r.responseText).rows;
 												
 						// Taken from part 18 of Dr. Crenshaw's JavaScript Functions and Methods Study Guide
-						var flatResponses = responses.reduce(function (target, element) { return target.concat(element); }, []);
+						var flatResponses = responses.reduce(function (target, element) { return target.concat(element); }, []);	
 						
 						
+						// Begin statistical computation
+						var numResponses = flatResponses.length;
+						
+						// Discover and count totals
+						var totals = [];
+						for(var i = 0; i < numResponses; ++i){
+							if (typeof totals[flatResponses[i]] === "undefined"){
+								totals[flatResponses[i]] = 1;
+							}
+							else{
+								++totals[flatResponses[i]];
+							}
+						}
+						console.log(totals);
+						
+						var percentages = [];
+						for (var t of totals.keys()){ // This for-each loop will only work on Chrome 38 or newer!!!
+							percentages[t] = totals[t] / numResponses;
+						}
+						percentages.shift(); // Shift of terrifying NaN that occurs
+						
+						console.log(percentages);
+						
 
-                        console.log(flatResponses);
-                        /*
-                                       list = {};
-                                       
-                                       // Create a list of events and names.
-                                       for(var i = 0; i < j["num_results"]; i++) {
-                                           
-                                           list[i] = {};
-
-                                           // Extract the event name and url from the
-                                           // JSON object received from the server.
-                                           list[i].name = j.results[i]["event_name"];
-                                           list[i].url = j.results[i]["event_detail_url"];
-                                       }
-
-                                       // List the events on the UI.
-                                       maverick.ui.listEvents(list, j["num_results"]);
-
-                                       // Send a message to the map.
-                                       var message = {
-                                           command: 'render'
-                                       }
-                                       
-                                       document.getElementById('map').contentWindow.postMessage(message, '*');
-                        */
-
+						
+						
                     }
                 }
             }
