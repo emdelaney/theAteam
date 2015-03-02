@@ -114,14 +114,17 @@ maverick.data = function() {
 		
 		var politicalQuery = "partyid IN (" + allowedParties.join() + ")";
 		
-
+		
+		// Filter out respondents who were not asked the question or gave no valid response
+		var validResponsesOnly = varName + " NOT IN (0, 8, 9)";
 
 
         // Make a new request.
         var r = makeHttpObject();
         if (r) {
 
-            var url = queryURL + "SELECT " + varName + " FROM " + gssTableID + " WHERE year=" + "'" + year + "' AND " + genderQuery + " AND " + politicalQuery + keyParam;
+            var url = queryURL + "SELECT " + varName + " FROM " + gssTableID +
+			" WHERE year=" + "'" + year + "' AND " + genderQuery + " AND " + politicalQuery + " AND " + validResponsesOnly + keyParam;
             // Construct the details of the credentialed request and send it.
             r.open("GET", url, true);
 
