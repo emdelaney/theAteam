@@ -135,11 +135,15 @@ maverick.data = function() {
                 if (r.readyState == 4) {
                     if (r.status == 200) {
 
-                        // Convert the string response into JSON
-                        // format.
-                        var j = JSON.parse(r.responseText);
+                        // Convert the string response into JSON format.
+                        var responses = JSON.parse(r.responseText).rows;
+												
+						// Taken from part 18 of Dr. Crenshaw's JavaScript Functions and Methods Study Guide
+						var flatResponses = responses.reduce(function (target, element) { return target.concat(element); }, []);
+						
+						
 
-                        console.log(j);
+                        console.log(flatResponses);
                         /*
                                        list = {};
                                        
