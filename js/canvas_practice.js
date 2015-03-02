@@ -20,15 +20,14 @@ maverick.init = function() {
 	
 	var pause_url = "img/pause.png";
 	var play_url = "img/play.png";
-	var button_url = "img/pause.png";
+	var play_hover_url = "img/play_hover.png";
+	var pause_hover_url = "img/pause_hover.png";
+	var button_url = "img/pause_hover.png";
 	var play_displayed = true;
 	
 	function init_gui() {
 		draw();
 		handler_setup();
-		
-		console.log(document.getElementById("content").offsetWidth);
-		console.log(document.getElementById("subban1").offsetHeight);
 	}
 	
 	function draw() {
@@ -117,12 +116,30 @@ maverick.init = function() {
 		button.onclick = function() {
 			button.setAttribute("src", button_url);
 			if(play_displayed) {
-				button_url = play_url;
+				button_url = play_hover_url;
 				play_displayed = false;
 			}
 			else {
-				button_url = pause_url;
+				button_url = pause_hover_url;
 				play_displayed = true;
+			}
+		};
+		
+		button.onmouseover = function() {
+			if(play_displayed) {
+				button.setAttribute("src", play_hover_url);
+			}
+			else {
+				button.setAttribute("src", pause_hover_url);
+			}
+		};
+		
+		button.onmouseout = function() {
+			if(play_displayed) {
+				button.setAttribute("src", play_url);
+			}
+			else {
+				button.setAttribute("src", pause_url);
 			}
 		};
 	}
