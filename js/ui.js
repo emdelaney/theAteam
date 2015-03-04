@@ -11,11 +11,11 @@
 var maverick = maverick || {};
 
 // Add the user interface module to the namespace
-maverick.init_ui = {};
+maverick.ui = {};
 
 // Define the interface module, encapsulating all of its variables
 // and objects to avoid polluting the global namespace
-maverick.init_ui = function() {
+maverick.ui = function() {
 	
 	// This object will be contain the current values for
 	// each bar of the graph; usually will change often
@@ -24,6 +24,23 @@ maverick.init_ui = function() {
 		"Disagree": 		 36.3,
 		"Agree": 			 43.2,
 		"Strongly Agree": 	 13.8
+	};
+	
+	// Define some meta-data about the datasets to use; these objects
+	// are mostly used to populate the drop-down menus
+	/*
+	*	-->Initial dataset displayed is just the first in the list<--
+	*/
+	var datasets = {
+		fehelp: {
+			var_name: "Wife Should Help Husbands Career First", 
+			years: [1977,1985,1986,1988,1989,1990,1991,1993,1994,1996,1998]
+		}, 
+		homosex: {
+			var_name: "Homosexual Sex Relations",
+			years: [1973,1974,1976,1977,1980,1982,1984,1985,1987,1988,
+					1989,1990,1991,1993,1994,1996,1998,2000,2002,2004,2006]
+		}
 	};
 	
 	// This object contains all of the properties for the graph
@@ -66,6 +83,7 @@ maverick.init_ui = function() {
 	function init() {
 		draw();
 		handler_setup();
+		populate_menus();
 	}
 	
 	// Driver function that sets up the initial bar graph with its
@@ -186,6 +204,62 @@ maverick.init_ui = function() {
 		};
 	}
 	
+	// Function to programmatically add DOM elements to the dataset
+	// drop-down menu and the dataset drop-down menu
+	function populate_menus() {
+		var year_menu = document.getElementById("year_menu");
+		var set_menu = document.getElementById("dataset_menu");
+		
+		// Make sure we actually have some datasets
+		if(datasets) {
+		
+			// A little trick to grab the first element in the object
+			for(var key in datasets) break;
+			
+			if(datasets[key].years) {
+				pop_years(key);
+			}
+			
+			for(var key2 in datasets) {
+				var set = document.createElement("option");
+				set.setAttribute("value", datasets[key2].var_name);
+				var text = document.createTextNode(datasets[key2].var_name);
+				set.appendChild(text);
+				dataset_menu.appendChild(set);
+			}
+		}
+		
+		year_menu.onchange = function() {
+			year_change(this.value);
+		};
+		
+		dataset_menu.onchange = function() {
+			dataset_change(this.value);
+		};
+	}
+	
+	// Callback function when the user selects a new year
+	// in the year drop-down menu
+	function year_change(year) {
+		console.log(year);
+	}
+	
+	// Callback function when the user selects a new dataset
+	// from the dataset drop-down menu
+	function dataset_change(set) {
+		
+		// First, we find which dataset was selected
+		for(var key in datasets) {
+			if(datasets[key].var_name === set) {
+				var menu = document.getElementById("year_menu");
+				menu.innerHTML = "";
+				
+				pop_years(key);
+				break;
+			}
+		}
+	}
+	
 	// Determine the maximum scale value
 	function find_highest() {
 		var top = 0.0;
@@ -203,6 +277,17 @@ maverick.init_ui = function() {
 		}
 		else {
 			return 50.0;
+		}
+	}
+	
+	// Helper function to populate the year menu, with the given dataset
+	function pop_years(key) {
+		for(var i = 0; i < datasets[key].years.length; ++i) {
+			var year = document.createElement("option");
+			year.setAttribute("value", datasets[key].years[i]);
+			var text = document.createTextNode(datasets[key].years[i]);
+			year.appendChild(text);
+			year_menu.appendChild(year);
 		}
 	}
 	
@@ -243,4 +328,4 @@ maverick.init_ui = function() {
 	window.onload = init;
 };
  
-maverick.init_ui();
+maverick.ui();
