@@ -20,10 +20,10 @@ maverick.ui = function() {
 	// This object will be contain the current values for
 	// each bar of the graph; usually will change often
 	var response_data = {
-		"Strongly Disagree": 6.7,
-		"Disagree": 		 36.3,
+		"Strongly Agree": 	 13.8,
 		"Agree": 			 43.2,
-		"Strongly Agree": 	 13.8
+		"Disagree": 		 36.3,
+		"Strongly Disagree": 6.7
 	};
 	
 	// Define some meta-data about the datasets to use; these objects
@@ -34,23 +34,32 @@ maverick.ui = function() {
 	var datasets = {
 		fehelp: {
 			var_name: "Wife Should Help Husbands Career First", 
-			years: [1977,1985,1986,1988,1989,1990,1991,1993,1994,1996,1998]
+			years: [1977,1985,1986,1988,1989,1990,1991,1993,1994,1996,1998],
+			labels: ["Strongly<br>Disagree", "Disagree", "Agree", "Strongly<br>Agree"]
 		}, 
 		homosex: {
 			var_name: "Homosexual Sex Relations",
 			years: [1973,1974,1976,1977,1980,1982,1984,1985,1987,1988,
-					1989,1990,1991,1993,1994,1996,1998,2000,2002,2004,2006]
+					1989,1990,1991,1993,1994,1996,1998,2000,2002,2004,2006],
+			labels: ["Not Wrong<br>at All", "Sometimes<br>Wrong", 
+						"Almost<br>Always<br>Wrong", "Always<br>Wrong"]
 		}
 	};
+	
+	var current_set;
 	
 	// This object contains all of the properties for the graph
 	// canvas object, including colors, dimensions, etc
 	var graph_properties = {
-		colors: {
+		colors: {			
 			"Strongly Disagree": "rgba(0,95,107,1.0)",
 			"Disagree":  "rgba(0,140,158,1.0)",
 			"Agree":  "rgba(0,180,204,1.0)",
-			"Strongly Agree": "rgba(0,223,252,1.0)"
+			"Strongly Agree": "rgba(0,223,252,1.0)",
+			"Always Wrong": "rgba(225,227,172,1.0)",
+			"Almost Always Wrong":  "rgba(166,185,133,1.0)",
+			"Sometimes Wrong":  "rgba(100,138,100,1.0)",
+			"Not Wrong at All": "rgba(70,104,91,1.0)"
 		},
 		axes_color: "rgb(150,150,150)",
 		top_gap:	20, // the number of pixels between top of graph and top of canvas
@@ -74,6 +83,7 @@ maverick.ui = function() {
 	// draw onto the graph canvas
 	var canvas;
 	var context;
+	var clean_slate;
 	
 	// Whether the play button is currently displayed rather than the pause
 	var play_displayed = true;
@@ -81,6 +91,11 @@ maverick.ui = function() {
 	// Just a wrapper function that calls other initialization
 	// functions when the window has loaded
 	function init() {
+	
+		// Set up drawing on the graph canvas
+		canvas = document.getElementById("graph_canvas");
+		context = canvas.getContext("2d");
+		
 		draw();
 		handler_setup();
 		populate_menus();
@@ -89,10 +104,6 @@ maverick.ui = function() {
 	// Driver function that sets up the initial bar graph with its
 	// axes, scale markers, and the bars for the initial data
 	function draw() {
-		
-		// Set up drawing on the graph canvas
-		canvas = document.getElementById("graph_canvas");
-		context = canvas.getContext("2d");
 		
 		// How far apart the scales are apart from each other
 		graph_properties.dist_between_scales = 
@@ -139,7 +150,7 @@ maverick.ui = function() {
 		var g = graph_properties;
 		
 		// Keep an index so we know where to start drawing the bar
-		var i = 0;
+		var i = 3;
 		for(var key in response_data) {
 			
 			// set up the dimensions of the bar
@@ -154,7 +165,7 @@ maverick.ui = function() {
 			
 			context.fillStyle = graph_properties.colors[key];
 			context.fillRect(left, top, g.bar_width, height);
-			i++;
+			i--;
 		}
 	}
 	
@@ -216,6 +227,8 @@ maverick.ui = function() {
 			// A little trick to grab the first element in the object
 			for(var key in datasets) break;
 			
+			current_set = key;
+			
 			if(datasets[key].years) {
 				pop_years(key);
 			}
@@ -229,6 +242,8 @@ maverick.ui = function() {
 			}
 		}
 		
+		
+		
 		year_menu.onchange = function() {
 			year_change(this.value);
 		};
@@ -241,7 +256,26 @@ maverick.ui = function() {
 	// Callback function when the user selects a new year
 	// in the year drop-down menu
 	function year_change(year) {
-		console.log(year);
+		
+		// Invoke the data-controller!
+		maverick.data.request(query_callback, year, current_set, false, false,
+								false, false, false, false, false, false, false);
+	}
+	
+	// Callback function that the data-controller calls when
+	// it is done querying the fusion table
+	function query_callback(data) {
+
+		for(var key in data) {
+			data[key] *= 100;
+		}
+		
+		response_data = data;
+		
+		console.log(data);
+		// Clean the canvas slate
+		context.clearRect(0, 0, canvas.width, canvas.height);
+		draw();
 	}
 	
 	// Callback function when the user selects a new dataset
@@ -255,6 +289,24 @@ maverick.ui = function() {
 				menu.innerHTML = "";
 				
 				pop_years(key);
+				
+				current_set = key;
+				
+				// We have to query the data to draw the graph
+				// for the new dataset
+				year_change(datasets[key].years[0]);
+				
+				// We also need to change the labels on the graph
+				var lbls = datasets[key].labels;
+				//document.getElementsByClassName("first_label")[0].replaceChild(document.createTextNode(lbls[0]));
+				var first_label = document.getElementsByClassName("first_label")[0];
+				first_label.innerHTML = lbls[0];
+				
+				var rest = document.getElementsByClassName("x_label");
+				for(var i = 1; i < lbls.length; i++)
+				{
+					rest[i-1].innerHTML = lbls[i];
+				}
 				break;
 			}
 		}
@@ -272,7 +324,7 @@ maverick.ui = function() {
 		}	
 		
 		// Set top scale value based on largest response value
-		if (key > 50.0) {
+		if (top > 50.0) {
 			return 100.0;
 		}
 		else {
