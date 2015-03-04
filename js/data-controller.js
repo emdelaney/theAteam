@@ -24,7 +24,25 @@ maverick.data = function() {
     var keyParam = "&key=" + apikey;
     var gssTableID = "14d34mgfXGR9tJWvqJu2v4C91RdZaxNpjdk4yw2iB";
     var queryURL = "https://www.googleapis.com/fusiontables/v1/query?sql=";
-
+	
+	var cache = []; // Cache retrieved results to make later accesses faster
+	
+	
+	/*
+	// Add a string hash function. Taken from http://stackoverflow.com/a/7616484/
+	String.prototype.hashCode = function() {
+		var hash = 0, i, chr, len;
+		if (this.length == 0){
+			return hash;
+		}
+		for (i = 0, len = this.length; i < len; i++) {
+			chr   = this.charCodeAt(i);
+			hash  = ((hash << 5) - hash) + chr;
+			hash |= 0; // Convert to 32bit integer
+		}
+		return hash;
+	};
+*/
 
 
     // ************************************************************************
@@ -75,6 +93,14 @@ maverick.data = function() {
      *
      */
     maverick.data.request = function(callback, year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other, decAns) {
+		
+		var stringRep = year + "" + varName + "" + male + "" + female + "" + stRep + "" + nStRep + "" + ind + "" + nStDem + "" + stDem + "" + other + "" + decAns;
+		
+		if (!(cache[stringRep]  === "undefined")){
+			// We've done this before. No need to do a whole new lookup.
+			callback(cache[stringRep]);
+			return;			
+		}
 
 	
         // If no gender is selected or all genders are selected
@@ -176,6 +202,7 @@ maverick.data = function() {
 							feReturn["Agree"]             = percentages[2];
 							feReturn["Disagree"]          = percentages[3];
 							feReturn["Strongly Disagree"] = percentages[4];
+							cache[stringRep] = feReturn;
 							callback(feReturn);
 						}
 						else if ("homosex" == varName){
@@ -184,10 +211,12 @@ maverick.data = function() {
 							hoReturn["Almost Always Wrong"] = percentages[2];
 							hoReturn["Sometimes Wrong"]     = percentages[3];
 							hoReturn["Not Wrong at All"]    = percentages[4];
+							cache[stringRep] = hoReturn;
 							callback(hoReturn);
 						}
 						else{
 							alert("Unsupported variable name " + varName + " used. Returning raw numeric names.");
+							cache[stringRep] = percentages;
 							callback(percentages);
 						}
 						
@@ -203,3 +232,5 @@ maverick.data = function() {
 
 // Invoke module.
 maverick.data();
+
+
