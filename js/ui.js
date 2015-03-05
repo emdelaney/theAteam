@@ -267,7 +267,9 @@ maverick.ui = function() {
 	function query_callback(data) {
 
 		for(var key in data) {
-			data[key] *= 100;
+			if(data[key] <= 1.0) {
+				data[key] *= 100;
+			}
 		}
 		
 		response_data = data;
