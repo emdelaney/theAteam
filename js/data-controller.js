@@ -80,7 +80,7 @@ maverick.data = function() {
 		
 		var stringRep = year + "" + varName + "" + male + "" + female + "" + stRep + "" + nStRep + "" + ind + "" + nStDem + "" + stDem + "" + other + "" + decAns;
 		
-		if (!(cache[stringRep]  === "undefined")){
+		if (!(typeof cache[stringRep]  === "undefined")){
 			// We've done this before. No need to do a whole new lookup.
 			callback(cache[stringRep]);
 			return;			
