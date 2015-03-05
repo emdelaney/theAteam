@@ -62,6 +62,7 @@ maverick.ui = function() {
 			"Not Wrong at All": "rgba(70,104,91,1.0)"
 		},
 		axes_color: "rgb(150,150,150)",
+		axes_color_high: "rgba(255,255,0,0.7)",
 		top_gap:	20, // the number of pixels between top of graph and top of canvas
 		dist_between_scales: 0, // set later in the code
 		num_divisions: 5,
@@ -372,7 +373,15 @@ maverick.ui = function() {
 		
 		// Draw the scale numbers from the preceding temp list
 		context.font = g.font;
-		context.fillStyle = g.axes_color;
+		
+		// Tentatively, change color when scale changes
+		if(scale > 50.0) {
+			context.fillStyle = g.axes_color_high;
+		}
+		else {
+			context.fillStyle = g.axes_color;
+		}
+		
 		scales.forEach(function(el, index) {
 			context.fillText("" + el, 10, (index * g.dist_between_scales) + g.top_gap);
 		});
