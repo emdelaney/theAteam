@@ -19,7 +19,7 @@ maverick.ui = function() {
 	
 	// This object will be contain the current values for
 	// each bar of the graph; usually will change often
-	var response_data = {
+	var displayed_data = {
 		"Strongly Agree": 	 13.8,
 		"Agree": 			 43.2,
 		"Disagree": 		 36.3,
@@ -84,9 +84,15 @@ maverick.ui = function() {
 	var canvas;
 	var context;
 	var clean_slate;
+	var play_pause_button;
+	var year_menu;
+	var animation = {
+	    frames_per_year: 60
+	}
 	
 	// Whether the play button is currently displayed rather than the pause
 	var currently_paused = true;
+	var current_year = 1977;
 	
 	// Just a wrapper function that calls other initialization
 	// functions when the window has loaded
@@ -95,7 +101,8 @@ maverick.ui = function() {
 		// Set up drawing on the graph canvas
 		canvas = document.getElementById("graph_canvas");
 		context = canvas.getContext("2d");
-		
+		play_pause_button = document.getElementById("play_button");
+		year_menu = document.getElementById("year_menu");
 		draw();
 		handler_setup();
 		populate_menus();
@@ -151,10 +158,10 @@ maverick.ui = function() {
 		
 		// Keep an index so we know where to start drawing the bar
 		var i = 3;
-		for(var key in response_data) {
+		for(var key in displayed_data) {
 			
 			// set up the dimensions of the bar
-			var top = g.top_gap + ((g.highest - response_data[key]) * 
+			var top = g.top_gap + ((g.highest - displayed_data[key]) * 
 				(g.num_divisions * g.dist_between_scales)/g.highest);
 			
 			// 343 obtained with 'trial and error' observations
@@ -172,13 +179,10 @@ maverick.ui = function() {
 	// Function that sets up function callbacks
 	// for the play/pause button (and soon the filter buttons)
 	function handler_setup() {
-		var button = document.getElementById("play_button");
 		
 		// Just alternate between play and pause
 		// button when user clicks for now
-		button.onclick = function() {
-			button.setAttribute("src", button_urls.next);
-			
+		play_pause_button.onclick = function() {
 			// Alternate between the highlighted buttons because
 			// the image changes to un-highlighted when
 			// the mouse exits the element
@@ -194,23 +198,23 @@ maverick.ui = function() {
 		
 		// When the mouse hovers over the button,
 		// highlight the button accordingly
-		button.onmouseover = function() {
+		play_pause_button.onmouseover = function() {
 			if(currently_paused) {
-				button.setAttribute("src", button_urls.play_hover);
+				play_pause_button.setAttribute("src", button_urls.play_hover);
 			}
 			else {
-				button.setAttribute("src", button_urls.pause_hover);
+				play_pause_button.setAttribute("src", button_urls.pause_hover);
 			}
 		};
 		
 		// Make sure the button isn't highlighted anymore
 		// when the mouse exits the element
-		button.onmouseout = function() {
+		play_pause_button.onmouseout = function() {
 			if(currently_paused) {
-				button.setAttribute("src", button_urls.play);
+				play_pause_button.setAttribute("src", button_urls.play);
 			}
 			else {
-				button.setAttribute("src", button_urls.pause);
+				play_pause_button.setAttribute("src", button_urls.pause);
 			}
 		};
 	}
@@ -218,7 +222,6 @@ maverick.ui = function() {
 	// Function to programmatically add DOM elements to the dataset
 	// drop-down menu and the dataset drop-down menu
 	function populate_menus() {
-		var year_menu = document.getElementById("year_menu");
 		var set_menu = document.getElementById("dataset_menu");
 		
 		// Make sure we actually have some datasets
@@ -256,7 +259,7 @@ maverick.ui = function() {
 	// Callback function when the user selects a new year
 	// in the year drop-down menu
 	function year_change(year) {
-		
+	    current_year = year;
 		// Invoke the data-controller!
 		maverick.data.request(query_callback, year, current_set, false, false,
 								false, false, false, false, false, false, false);
@@ -272,7 +275,7 @@ maverick.ui = function() {
 			}
 		}
 		
-		response_data = data;
+		displayed_data = data;
 		
 		console.log(data);
 		// Clean the canvas slate
@@ -284,6 +287,7 @@ maverick.ui = function() {
 	// from the dataset drop-down menu
 	function dataset_change(set) {
 		
+	    pause_animation();
 		// First, we find which dataset was selected
 		for(var key in datasets) {
 			if(datasets[key].var_name === set) {
@@ -319,9 +323,9 @@ maverick.ui = function() {
 		var top = 0.0;
 		
 		// Iterate through the response data to find the largest
-		for (var key in response_data) {
-			if(response_data[key] > top) {
-				top = response_data[key];
+		for (var key in displayed_data) {
+			if(displayed_data[key] > top) {
+				top = displayed_data[key];
 			}
 		}	
 		
@@ -330,7 +334,8 @@ maverick.ui = function() {
 			return 100.0;
 		}
 		else {
-			return 50.0;
+            //TODO: For now, always return 100 so the animation doesn't do weird stuff.
+			return 100.0;
 		}
 	}
 	
@@ -383,14 +388,38 @@ maverick.ui = function() {
 
 	function pause_animation()
 	{
+	    play_pause_button.setAttribute("src", button_urls.play);
 	    button_urls.next = button_urls.pause_hover;
 	    currently_paused = true;
 	}
 
 	function start_animation()
 	{
+	    play_pause_button.setAttribute("src", button_urls.pause);
 	    button_urls.next = button_urls.play_hover;
 	    currently_paused = false;
+	    setTimeout(animate_next_bar, 500);
+	}
+
+    // Hacked together for now, simply changing the year.
+    // TODO: use window.requestAnimationFrame
+	// to make the animations smoother eventually.
+	function animate_next_bar()
+	{
+	    if (!currently_paused)
+	    {
+	        var idx = datasets[current_set].years.lastIndexOf(current_year);
+	        if (idx == datasets[current_set].years.length - 1)
+	        {
+	            pause_animation();
+	        }
+	        else
+	        {
+	            year_menu.selectedIndex = idx + 1;
+	            year_change(datasets[current_set].years[idx + 1]);
+	            setTimeout(animate_next_bar, 1000);
+	        }
+	    }
 	}
 };
  
