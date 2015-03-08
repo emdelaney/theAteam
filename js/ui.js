@@ -236,7 +236,21 @@ maverick.ui = function() {
 		fem.onclick = function () { toggle_filter("female", fem); };
 		var male = document.getElementById("male_filter");
 		male.onclick = function () { toggle_filter("male", male); };
-
+        // Set up political filters
+		var sr = document.getElementById("strong_republican_filter");
+		sr.onclick = function () { toggle_filter("strong republican", sr); };
+		var nsr = document.getElementById("not_strong_republican_filter");
+		nsr.onclick = function () { toggle_filter("not strong republican", nsr); };
+		var indep = document.getElementById("independent_filter");
+		indep.onclick = function () { toggle_filter("independent", indep); };
+		var sd = document.getElementById("strong_democrat_filter");
+		sd.onclick = function () { toggle_filter("strong democrat", sd); };
+		var nsd = document.getElementById("not_strong_democrat_filter");
+		nsd.onclick = function () { toggle_filter("not strong democrat", nsd); };
+		var oth = document.getElementById("other_filter");
+		oth.onclick = function () { toggle_filter("other", oth); };
+		var dta = document.getElementById("did_not_answer_filter");
+		dta.onclick = function () { toggle_filter("did not answer", dta); };
 
 	}
 
