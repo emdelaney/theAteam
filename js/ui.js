@@ -467,7 +467,17 @@ maverick.ui = function() {
 	    play_pause_button.setAttribute("src", button_urls.pause);
 	    button_urls.next = button_urls.play_hover;
 	    currently_paused = false;
-	    setTimeout(animate_next_bar, 500);
+	    var idx = datasets[current_set].years.lastIndexOf(current_year);
+        // If we press the start button and we're at the last year, restart.
+	    if (idx == datasets[current_set].years.length - 1) {
+	        year_menu.selectedIndex = 0;
+	        year_change(datasets[current_set].years[0]);
+	        setTimeout(animate_next_bar, 1000);
+	    }
+	    else
+	    {
+	        setTimeout(animate_next_bar, 500);
+	    }
 	}
 
     // Hacked together for now, simply changing the year.
