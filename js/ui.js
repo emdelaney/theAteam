@@ -86,7 +86,7 @@ maverick.ui = function() {
 	var clean_slate;
 	
 	// Whether the play button is currently displayed rather than the pause
-	var play_displayed = true;
+	var currently_paused = true;
 	
 	// Just a wrapper function that calls other initialization
 	// functions when the window has loaded
@@ -182,20 +182,20 @@ maverick.ui = function() {
 			// Alternate between the highlighted buttons because
 			// the image changes to un-highlighted when
 			// the mouse exits the element
-			if(play_displayed) {
-				button_urls.next = button_urls.play_hover;
-				play_displayed = false;
+			if (currently_paused) {
+                // pushing the PLAY button.
+				start_animation();
 			}
 			else {
-				button_urls.next = button_urls.pause_hover;
-				play_displayed = true;
+                // pushing the PAUSE button.
+				pause_animation();
 			}
 		};
 		
 		// When the mouse hovers over the button,
 		// highlight the button accordingly
 		button.onmouseover = function() {
-			if(play_displayed) {
+			if(currently_paused) {
 				button.setAttribute("src", button_urls.play_hover);
 			}
 			else {
@@ -206,7 +206,7 @@ maverick.ui = function() {
 		// Make sure the button isn't highlighted anymore
 		// when the mouse exits the element
 		button.onmouseout = function() {
-			if(play_displayed) {
+			if(currently_paused) {
 				button.setAttribute("src", button_urls.play);
 			}
 			else {
@@ -380,6 +380,18 @@ maverick.ui = function() {
 	
 	// Only call the function when the page is loaded
 	window.onload = init;
+
+	function pause_animation()
+	{
+	    button_urls.next = button_urls.pause_hover;
+	    currently_paused = true;
+	}
+
+	function start_animation()
+	{
+	    button_urls.next = button_urls.play_hover;
+	    currently_paused = false;
+	}
 };
  
 maverick.ui();
