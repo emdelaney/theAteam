@@ -254,6 +254,8 @@ maverick.ui = function() {
     // function to toggle a specific filter value.
 	function toggle_filter(filter, element)
 	{
+	    // If we've pushed a filter button, pause an animation.
+	    pause_animation();
         // If we're deselecting the filter:
 	    if(filters[filter])
 	    {
@@ -299,7 +301,8 @@ maverick.ui = function() {
 		
 		
 		year_menu.onchange = function() {
-			year_change(this.value);
+		    pause_animation();
+		    year_change(this.value);
 		};
 		
 		dataset_menu.onchange = function() {
@@ -312,8 +315,11 @@ maverick.ui = function() {
 	function year_change(year) {
 	    current_year = year;
 		// Invoke the data-controller!
-		maverick.data.request(query_callback, year, current_set, false, false,
-								false, false, false, false, false, false);
+	    maverick.data.request(query_callback, current_year, current_set,
+            filters["female"],
+            filters["male"], filters["strong republican"], filters["not strong republican"],
+            filters["independent"], filters["not strong democrat"],
+            filters["strong democrat"], filters["other"]);
 	}
 
     // Function to re-request data when the filter state changes.
@@ -448,9 +454,12 @@ maverick.ui = function() {
 
 	function pause_animation()
 	{
-	    play_pause_button.setAttribute("src", button_urls.play);
-	    button_urls.next = button_urls.pause_hover;
-	    currently_paused = true;
+	    if (!currently_paused)
+	    {
+	        play_pause_button.setAttribute("src", button_urls.play);
+	        button_urls.next = button_urls.pause_hover;
+	        currently_paused = true;
+	    }
 	}
 
 	function start_animation()
