@@ -30,13 +30,13 @@ maverick.ui = function() {
         {
             "female": false,
             "male": false,
-            "strong_republican": false,
-            "not_strong_republican": false,
+            "strong republican": false,
+            "not strong republican": false,
             "independent": false,
             "not strong democrat": false,
             "strong democrat": false,
             "other": false,
-            "did_not_answer": false
+            "did not answer": false
         }
  
 	
@@ -255,6 +255,8 @@ maverick.ui = function() {
 	        filters[filter] = true;
 	        element.setAttribute("class", "fil_but_selected");
 	    }
+        // Ask for a filtered data set and re-draw.
+	    filter_change();
 	}
 	
 	// Function to programmatically add DOM elements to the dataset
@@ -301,6 +303,15 @@ maverick.ui = function() {
 		// Invoke the data-controller!
 		maverick.data.request(query_callback, year, current_set, false, false,
 								false, false, false, false, false, false, false);
+	}
+
+    // Function to re-request data when the filter state changes.
+	function filter_change()
+	{
+	    maverick.data.request(query_callback, current_year, current_set, filters["female"],
+            filters["male"], filters["strong republican"], filters["not strong republican"],
+            filters["independent"], filters["not strong democrat"], 
+            filters["strong democrat"], filters["other"], filters["did not answer"]);
 	}
 	
 	// Callback function that the data-controller calls when
