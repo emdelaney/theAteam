@@ -35,8 +35,7 @@ maverick.ui = function() {
             "independent": false,
             "not strong democrat": false,
             "strong democrat": false,
-            "other": false,
-            "did not answer": false
+            "other": false
         }
  
 	
@@ -249,8 +248,6 @@ maverick.ui = function() {
 		nsd.onclick = function () { toggle_filter("not strong democrat", nsd); };
 		var oth = document.getElementById("other_filter");
 		oth.onclick = function () { toggle_filter("other", oth); };
-		var dta = document.getElementById("did_not_answer_filter");
-		dta.onclick = function () { toggle_filter("did not answer", dta); };
 
 	}
 
@@ -316,7 +313,7 @@ maverick.ui = function() {
 	    current_year = year;
 		// Invoke the data-controller!
 		maverick.data.request(query_callback, year, current_set, false, false,
-								false, false, false, false, false, false, false);
+								false, false, false, false, false, false);
 	}
 
     // Function to re-request data when the filter state changes.
@@ -325,7 +322,7 @@ maverick.ui = function() {
 	    maverick.data.request(query_callback, current_year, current_set, filters["female"],
             filters["male"], filters["strong republican"], filters["not strong republican"],
             filters["independent"], filters["not strong democrat"], 
-            filters["strong democrat"], filters["other"], filters["did not answer"]);
+            filters["strong democrat"], filters["other"]);
 	}
 	
 	// Callback function that the data-controller calls when

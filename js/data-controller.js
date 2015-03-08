@@ -76,9 +76,9 @@ maverick.data = function() {
      * is set to false it will be set to true.
      *
      */
-    maverick.data.request = function(callback, year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other, decAns) {
+    maverick.data.request = function(callback, year, varName, male, female, stRep, nStRep, ind, nStDem, stDem, other) {
 		
-		var stringRep = year + "" + varName + "" + male + "" + female + "" + stRep + "" + nStRep + "" + ind + "" + nStDem + "" + stDem + "" + other + "" + decAns;
+		var stringRep = year + "" + varName + "" + male + "" + female + "" + stRep + "" + nStRep + "" + ind + "" + nStDem + "" + stDem + "" + other;
 		
 		if (!(typeof cache[stringRep]  === "undefined")){
 			// We've done this before. No need to do a whole new lookup.
@@ -100,8 +100,8 @@ maverick.data = function() {
 
 		
         // Because political association has more options, we need to do something fancier to maintain sanity
-        if (!(stRep || nStRep || ind || nStDem || stDem || other || decAns)) {
-            stRep = nStRep = ind = nStDem = stDem = other = decAns = true;
+        if (!(stRep || nStRep || ind || nStDem || stDem || other)) {
+            stRep = nStRep = ind = nStDem = stDem = other = true;
         }
 
 		var allowedParties = [];
@@ -123,9 +123,6 @@ maverick.data = function() {
 		}
 		if(other){
 			allowedParties.push(7);
-		}
-		if(decAns){
-			allowedParties.push(8);
 		}
 		
 		var politicalQuery = "partyid IN (" + allowedParties.join() + ")";
