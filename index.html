@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<meta charset="utf-8"/>
+		<title>MAVERICK</title>
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/data-controller.js" type="text/javascript"></script>
+		<script src="js/ui.js" type="text/javascript"></script>
+	</head>
+	<body>
+	
+	<!-- Project Title Banner -->
+		<div id="banner">
+			<div id="subban1">
+				<img src="img/tommy.jpg" alt="Tom Cruise">
+			</div>
+			<div id="subban2">
+				<h1 id="title">MAVERICK</h1>
+				<h3 id="sub_title">Modern and Accessible Visualization of Entertaining
+						and Really Interesting Controversial Knowledge</h3>
+			</div>
+		</div>
+		
+	<!-- div element containing the entirety of all relevant content -->
+	<div id="content">
+		<!-- div element that encloses the GUI elements: Dataset menu, play/pause button,
+			 and the year menu -->
+		<div id="top_content">
+		
+			<div id="dataset">
+				Dataset<br>
+				<select id="dataset_menu" value="dataset_menu">
+				<!-- Programmatically added in js -->
+				</select>
+			</div>
+			<div id="play">
+				<input id="play_button" type="image" src="img/play.png" alt="Play"> 
+			</div>
+			<div id="year">
+				Year<br>
+				<select id="year_menu">
+					<!-- Values will be added in JavaScript code -->
+				</select>
+			</div>
+		</div>
+		
+		<!-- div element that encloses the GUI elements: Filter/grouping selector
+			 and the actual graph to visualize the data -->
+		<div id="bottom_content">
+			<div id="filter">
+				Gender <br>
+				<div id="gender_filter">
+					<button class="fil_but" type="button" disabled="disabled">Female</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Male</button> <br>
+				</div>
+				Political Association <br>
+				<div id="pol_filter">
+					<button class="fil_but" type="button" disabled="disabled">Strong Republican</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Not Strong Republican</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Independent</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Not Strong Democrat</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Strong Democrat</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Other</button> <br>
+					<button class="fil_but" type="button" disabled="disabled">Decline to Answer</button> <br>
+				</div>
+			</div>
+			<div id="graph">
+			<div id="top_graph">
+				<div id="y_label">
+					Percentage of Respondents
+				</div>
+				<div id="actual_graph">
+					<canvas id="graph_canvas" width="500" height="350">
+						Canvas is not supported by this browser.
+					</canvas>
+				</div>
+			</div>
+			<div id="bottom_encloser">
+				<div class="filler">&nbsp;</div>
+				<div id="bottom_graph">
+					<div class="first_label">
+						Strongly &#13;&#10; Disagree
+					</div>
+					<div class="x_label">
+						Disagree
+					</div>
+					<!--
+					<div class="x_label">
+						Neither Agree <br> nor Disagree
+					</div> -->
+					<div class="x_label">
+						Agree
+					</div>
+					<div class="x_label">
+						Strongly &#13;&#10; Agree
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--
+		<div class="practice">
+			<canvas id="tutorial" width="500" height="500">Canvas not supported by this browser</canvas>
+		</div>
+	-->	
+		
+	</body>
+
+</html>

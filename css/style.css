@@ -1,0 +1,231 @@
+body 
+{
+	background: #eeeeee;
+}
+
+#banner 
+{
+	overflow: hidden;
+	height: 100%;
+	background-color: #222222;
+	padding: 15px;
+	color: rgb(51, 181, 229);
+	font-family: Serif, Georgia;
+	min-width: 1012px;
+}
+
+#subban1
+{
+	margin-right: 50px;
+	
+}
+
+#subban1, #subban2
+{
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
+}
+
+#title
+{
+	font-family: Arial, Serif, Georgia;
+	font-style: italic;
+	font-size: 36px;
+}
+
+#sub_title 
+{
+	font-family: Arial, Serif, Georgia;
+	font-size: 18px;
+}
+
+#sub_banner 
+{
+
+}
+
+#content 
+{
+	overflow: hidden;
+	height: 100%;
+	vertical-align: middle;
+	margin-left: 10%;
+	margin-right: 10%;
+	width: 924px;
+}
+
+#top_content 
+{
+	overflow: hidden;
+	height: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	/*border: 2px solid red;*/
+}
+
+#dataset 
+{
+	display: inline-block;
+	margin-right: 120px;
+	font-family: Arial, Serif, Georgia;
+	/*border: 2px solid green;*/
+}
+
+#play 
+{
+	display: inline-block;
+	margin-right: 100px;
+}
+
+/*
+#play:hover
+{
+	background: rgba(51,181,229,0.5);
+}
+*/
+
+select 
+{
+	font-family: Arial, Serif, Georgia;
+	font-size: 18px;
+}
+
+#year 
+{
+	display: inline-block;
+	font-family: Arial, Serif, Georgia;
+}
+
+#bottom_content 
+{
+	overflow: hidden;
+	height: 100%;
+	display: inline-block;
+	/*border: 2px solid blue;*/
+}
+
+.fil_but
+{
+	width: 100%;
+	text-align: center;
+	padding: 5px;
+	margin: 5px;
+	color: rgb(60, 60, 61);
+	border: 1px solid rgba(51, 181, 229, 0.5);
+	/*border-radius: 7px;*/
+}
+
+.fil_but:hover
+{
+	background: rgba(51, 181, 229, 0.5);
+}
+
+#filter
+{
+	display: inline-block;
+	overflow: hidden;
+	height: 100%;
+	font-family: Arial, Serif, Georgia;
+	/*border: 2px solid black;*/
+}
+
+#gender_filter, #pol_filter
+{
+	overflow: hidden;
+	height: 100%;
+	/*border: 3px solid rgba(180, 180, 180, 0.8);
+	border-radius: 7px;*/
+	vertical-align: top;
+	padding-right: 10px;
+}
+
+#gender_filter
+{
+	margin-bottom: 20px;
+}
+
+#graph 
+{
+	overflow: hidden;
+	height: 100%;
+	background: #eeeeee;
+	width: 620px;
+	display: inline-block;
+	/*border: 1px solid red;*/
+}
+
+#graph_canvas 
+{
+	/*border: 1px solid rgb(51, 181, 229);*/
+	/*background: #556270;*/
+	background: rgba(52,56,56,1.0);
+}
+
+#top_graph 
+{
+	vertical-align: top;
+	display: inline-block;
+	overflow: hidden;
+	height: 355px;
+}
+
+#y_label 
+{
+	display: inline-block;
+	*display: inline;
+	margin-top: 25%;
+	margin-right: -55px;
+	margin-left: -39px;
+	vertical-align: top;
+	-ms-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	transform: rotate(-90deg);
+	font-family: Arial, Serif, Georgia;
+	color: rgb(80, 80, 80);
+}
+
+#actual_graph 
+{
+	display: inline-block;
+	*display: inline;
+	vertical-align: top;
+}
+
+#bottom_graph 
+{
+	vertical-align: bottom;
+	overflow: hidden;
+	height: 100%;
+	width: 500px;
+	text-align: justify;
+    -ms-text-justify: distribute-all-lines;
+    text-justify: distribute-all-lines;
+	font-family: Arial, Serif, Georgia;
+}
+
+.filler 
+{
+	float: left;
+	vertical-align: top;
+	width: 115px;
+	margin: 0;
+	text-align: center;
+	
+}
+
+.first_label
+{
+	margin-left: 60px;
+}
+
+.x_label, .first_label
+{
+	vertical-align: top;
+    display: inline-block;
+	width: 106px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	color: rgb(80, 80, 80);
+    zoom: 1
+}
