@@ -25,6 +25,20 @@ maverick.ui = function() {
 		"Disagree": 		 36.3,
 		"Strongly Disagree": 6.7
 	};
+
+	var filters =
+        {
+            "female": false,
+            "male": false,
+            "strong_republican": false,
+            "not_strong_republican": false,
+            "independent": false,
+            "not strong democrat": false,
+            "strong democrat": false,
+            "other": false,
+            "did_not_answer": false
+        }
+ 
 	
 	// Define some meta-data about the datasets to use; these objects
 	// are mostly used to populate the drop-down menus
@@ -177,7 +191,7 @@ maverick.ui = function() {
 	}
 	
 	// Function that sets up function callbacks
-	// for the play/pause button (and soon the filter buttons)
+	// for the play/pause button and the filter buttons
 	function handler_setup() {
 		
 		// Just alternate between play and pause
@@ -217,6 +231,30 @@ maverick.ui = function() {
 				play_pause_button.setAttribute("src", button_urls.pause);
 			}
 		};
+        // Set up gender filters
+		var fem = document.getElementById("female_filter");
+		fem.onclick = function () { toggle_filter("female", fem); };
+		var male = document.getElementById("male_filter");
+		male.onclick = function () { toggle_filter("male", male); };
+
+
+	}
+
+    // function to toggle a specific filter value.
+	function toggle_filter(filter, element)
+	{
+        // If we're deselecting the filter:
+	    if(filters[filter])
+	    {
+	        filters[filter] = false;
+	        element.setAttribute("class", "fil_but");
+	    }
+	    else
+        // We're selecting a filter.
+	    {
+	        filters[filter] = true;
+	        element.setAttribute("class", "fil_but_selected");
+	    }
 	}
 	
 	// Function to programmatically add DOM elements to the dataset
