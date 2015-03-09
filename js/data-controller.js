@@ -172,7 +172,7 @@ maverick.data = function() {
 						var percentages = [];
 						
 						for (var t of totals.keys()){ // This for-each loop will only work on Chrome 38 or newer!!!
-							percentages[t] = totals[t] / numResponses;
+							percentages[t] = totals[t] / numResponses * 100.0;
 						}												
 						
 						// Relate the percentages to their names. For now this is hard-coded, and this is fine for 2 data sets.

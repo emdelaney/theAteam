@@ -334,12 +334,6 @@ maverick.ui = function() {
 	// Callback function that the data-controller calls when
 	// it is done querying the fusion table
 	function query_callback(data) {
-
-		for(var key in data) {
-			if(data[key] <= 1.0) {
-				data[key] *= 100;
-			}
-		}
 		
 		displayed_data = data;
 		
@@ -472,7 +466,7 @@ maverick.ui = function() {
 	    if (idx == datasets[current_set].years.length - 1) {
 	        year_menu.selectedIndex = 0;
 	        year_change(datasets[current_set].years[0]);
-	        setTimeout(animate_next_bar, 1000);
+	        setTimeout(animate_next_bar, 1300);
 	    }
 	    else
 	    {
