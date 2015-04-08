@@ -116,8 +116,14 @@ select
 	/*border-radius: 7px;*/
 }
 
-.fil_but:hover
+.fil_but_selected
 {
+    width: 100%;
+	text-align: center;
+	padding: 5px;
+	margin: 5px;
+	color: rgb(60, 60, 61);
+	border: 1px solid rgba(51, 181, 229, 0.5);
 	background: rgba(51, 181, 229, 0.5);
 }
 
